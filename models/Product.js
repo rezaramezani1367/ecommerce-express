@@ -1,34 +1,51 @@
 const mongoose = require("mongoose");
 var uniqueValidator = require("mongoose-unique-validator");
 
-const bootcampSchema = new mongoose.Schema({
-  /* name: {
+const productSchema = new mongoose.Schema({
+  name: {
     type: String,
-    required: [true, "Please provide a name to the bootcamp"],
+    required: true,
     unique: true,
+    minLength: [5,"{PATH} must be least 5 character"],
   },
-  rating: {
-    type: Number,
-    required: [true, "Please provide a rating for a bootcamp"],
-  },
-  description: {
+  color: {
     type: String,
-    required: [true, "Please provide bootcamp with description"],
+    required: true,
+    default: "black",
+  },
+  category: {
+    type: String,
+    required: true,
   },
   price: {
     type: Number,
-    required: [true, "Please provide bootcamp with price"],
+    required: true,
   },
-  Category: {
+  rating: {
+    type: Number,
+    required: true,
+  },
+  brand: {
     type: String,
-    required: [true, "Please compelet  Category"],
+    required: true,
   },
-  */
-});
+  countInStock: {
+    type: Number,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  numReviews: {
+    type: Number,
+    required: true,
+  },
+}, { versionKey: false });
 
-const Bootcamp = mongoose.model("Bootcamp", bootcampSchema);
-// Apply the uniqueValidator plugin to userSchema.
-bootcampSchema.plugin(uniqueValidator, {
+const Product = mongoose.model("Product", productSchema);
+// Apply the uniqueValidator plugin to productSchema.
+productSchema.plugin(uniqueValidator, {
   message: "{PATH} already exists(must be unique)",
 });
-module.exports = Bootcamp;
+module.exports = Product;

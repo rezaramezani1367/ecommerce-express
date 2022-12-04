@@ -11,6 +11,7 @@ router
 // @route - /api/v1/Products/someid
 router
   .route("/:id")
+  .get(productControllers.getOneProduct)
   .put(productControllers.updateProductById)
   .delete(productControllers.deleteProductById);
 
