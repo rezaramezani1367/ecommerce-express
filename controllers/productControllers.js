@@ -11,6 +11,7 @@ exports.getAllProducts = asyncHandler(async (req, res, next) => {
   res.render("products/allProducts", {
     path: "/api/v1/products",
     pageTitle: "All Products",
+    product,
   });
 });
 exports.getOneProduct = asyncHandler(async (req, res, next) => {
@@ -19,8 +20,6 @@ exports.getOneProduct = asyncHandler(async (req, res, next) => {
     success: true,
     data: product,
   });
- 
-
 });
 
 exports.createNewProductForm = asyncHandler(async (req, res, next) => {
@@ -30,14 +29,14 @@ exports.createNewProductForm = asyncHandler(async (req, res, next) => {
   });
 });
 exports.createNewProduct = async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const product = await Product.create(req.body);
 
   // res.status(201).json({
   //   success: true,
   //   data: product,
   // });
-  res.redirect("/api/v1/products/create");
+  res.redirect("/api/v1/Products/");
 };
 
 exports.updateProductById = asyncHandler(async (req, res, next) => {
@@ -71,9 +70,9 @@ exports.deleteProductById = asyncHandler(async (req, res, next) => {
 
   await product.remove();
   product = await Product.find({});
-
-  res.status(200).json({
-    success: true,
-    data: product,
-  });
+  res.redirect("/api/v1/Products/");
+  // res.status(200).json({
+  //   success: true,
+  //   data: product,
+  // });
 });

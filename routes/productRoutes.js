@@ -2,13 +2,16 @@ const express = require("express");
 const productControllers = require("../controllers/productControllers");
 const router = express.Router();
 
-// @route - /api/v1/Products/
-router.route("/").get(productControllers.getAllProducts);
+router
+  .route("/")
+  .get(productControllers.getAllProducts);
+  // @route - /api/v1/Products/
 // @route - /api/v1/Products/create
 router
   .route("/create/")
   .get(productControllers.createNewProductForm)
   .post(productControllers.createNewProduct);
+
 
 // @route - /api/v1/Products/someid
 router
