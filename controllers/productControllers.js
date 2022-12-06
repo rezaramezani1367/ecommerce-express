@@ -3,10 +3,14 @@ const asyncHandler = require("../middleware/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
-  const product = await Product.find({},{numReviews:0});
-  res.status(200).json({
-    success: true,
-    data: product,
+  const product = await Product.find({}, { numReviews: 0 });
+  // res.status(200).json({
+  //   success: true,
+  //   data: product,
+  // });
+  res.render("products/allProducts", {
+    path: "/api/v1/products",
+    pageTitle: "All Products",
   });
 });
 exports.getOneProduct = asyncHandler(async (req, res, next) => {
@@ -15,16 +19,26 @@ exports.getOneProduct = asyncHandler(async (req, res, next) => {
     success: true,
     data: product,
   });
+ 
+
 });
 
-exports.createNewProduct = asyncHandler(async (req, res, next) => {
-  const product = await Product.create(req.body);
-
-  res.status(201).json({
-    success: true,
-    data: product,
+exports.createNewProductForm = asyncHandler(async (req, res, next) => {
+  res.render("products/createProducts", {
+    path: "/api/v1/products/create",
+    pageTitle: "Add Product",
   });
 });
+exports.createNewProduct = async (req, res, next) => {
+  console.log(req.body);
+  const product = await Product.create(req.body);
+
+  // res.status(201).json({
+  //   success: true,
+  //   data: product,
+  // });
+  res.redirect("/api/v1/products/create");
+};
 
 exports.updateProductById = asyncHandler(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
