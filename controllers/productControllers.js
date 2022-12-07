@@ -74,13 +74,10 @@ exports.deleteProductById = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // console.log(path.join( __basedir , "public"))
   fs.unlink(path.join(__dirname, "../public", product.image), (err) => {
     if (err) {
-      throw err;
+      new ErrorResponse(err, 404);
     }
-
-    console.log("Delete File successfully.");
   });
   await product.remove();
   product = await Product.find({});
