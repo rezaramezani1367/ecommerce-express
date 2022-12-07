@@ -20,10 +20,13 @@ const productSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
+    min:0
   },
   rating: {
     type: Number,
     required: true,
+    min:0,
+    max:5
   },
   brand: {
     type: String,
@@ -32,6 +35,8 @@ const productSchema = new mongoose.Schema({
   countInStock: {
     type: Number,
     required: true,
+    min:0,
+    default:0,
   },
   image: {
     type: String,
@@ -40,10 +45,12 @@ const productSchema = new mongoose.Schema({
   numReviews: {
     type: Number,
     required: true,
+    min:0,
+    default:0
   },
   description: {
     type: String,
-    // required: true,
+    required: true,
   },
 }, { versionKey: false });
 

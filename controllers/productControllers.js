@@ -1,7 +1,8 @@
 const Product = require("../models/Product");
 const asyncHandler = require("../middleware/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
-
+const fs = require("fs");
+const path = require("path");
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
   const product = await Product.find({}, { numReviews: 0 });
   // res.status(200).json({
@@ -25,24 +26,22 @@ exports.getOneProduct = asyncHandler(async (req, res, next) => {
 });
 
 exports.createNewProductForm = asyncHandler(async (req, res, next) => {
-  // console.log(req.flash('form')[0].name)
   res.render("products/createProducts", {
     path: "/api/v1/products/create",
     pageTitle: "Add Product",
-    message:req.flash('success1'),
-    form:req.flash('form')
+    message: req.flash("success1"),
+    form: req.flash("form"),
   });
 });
 exports.createNewProduct = asyncHandler(async (req, res, next) => {
-  // console.log(req.body);
   const product = await Product.create(req.body);
-  req.flash("success1", "product created successfully"),
-    // res.status(201).json({
-    //   success: true,
-    //   data: product,
-    // });
+  req.flash("success1", "product created successfully");
+  // res.status(201).json({
+  //   success: true,
+  //   data: product,
+  // });
 
-    res.redirect("/api/v1/Products/");
+  res.redirect("/api/v1/Products/");
 });
 
 exports.updateProductById = asyncHandler(async (req, res, next) => {
@@ -67,6 +66,7 @@ exports.updateProductById = asyncHandler(async (req, res, next) => {
 
 exports.deleteProductById = asyncHandler(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
+  // const directoryPath = __basedir + "/public/";
 
   if (!product) {
     return next(
@@ -74,6 +74,14 @@ exports.deleteProductById = asyncHandler(async (req, res, next) => {
     );
   }
 
+  // console.log(path.join( __basedir , "public"))
+  fs.unlink(path.join(__dirname, "../public", product.image), (err) => {
+    if (err) {
+      throw err;
+    }
+
+    console.log("Delete File successfully.");
+  });
   await product.remove();
   product = await Product.find({});
   req.flash("success1", "product deleted successfully"),

@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const session = require('express-session');
+
 connectDB();
 
 const app = express();

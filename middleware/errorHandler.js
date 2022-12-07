@@ -1,8 +1,6 @@
 const ErrorResponse = require("../utils/errorResponse");
 
 const errorHandler = (err, req, res, next) => {
- 
-
   let error = { ...err };
 
   error.message = err.message;
@@ -27,11 +25,13 @@ const errorHandler = (err, req, res, next) => {
 
   // add more check...
   req.flash("success1", error.message);
+
   req.flash("form", req.body);
+
 
   // res.status(error.statusCode || 500).json({
   //   success: false,
-  //   error: error.message || "Server Error",
+  //   error: error || "Server Error",
   // });
   res.redirect("back");
 };

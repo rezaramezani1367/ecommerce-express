@@ -770,6 +770,10 @@ select {
   margin-bottom: 0px;
 }
 
+.ml-3 {
+  margin-left: 0.75rem;
+}
+
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -918,6 +922,10 @@ select {
   gap: 1.5rem;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .overflow-x-auto {
   overflow-x: auto;
 }
@@ -1006,9 +1014,24 @@ select {
   border-color: rgb(100 116 139 / var(--tw-border-opacity));
 }
 
-.border-blueGray-300 {
+.border-slate-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(71 85 105 / var(--tw-border-opacity));
+}
+
+.border-slate-300 {
   --tw-border-opacity: 1;
   border-color: rgb(203 213 225 / var(--tw-border-opacity));
+}
+
+.border-slate-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(100 116 139 / var(--tw-border-opacity));
+}
+
+.border-slate-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(148 163 184 / var(--tw-border-opacity));
 }
 
 .bg-transparent {
@@ -1033,11 +1056,6 @@ select {
 .bg-blueGray-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 252 / var(--tw-bg-opacity));
-}
-
-.bg-blueGray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
 .bg-pink-500 {
@@ -1237,11 +1255,6 @@ select {
   color: rgb(236 72 153 / var(--tw-text-opacity));
 }
 
-.text-blueGray-400 {
-  --tw-text-opacity: 1;
-  color: rgb(148 163 184 / var(--tw-text-opacity));
-}
-
 .no-underline {
   text-decoration-line: none;
 }
@@ -1254,6 +1267,26 @@ select {
 .placeholder-blueGray-300::placeholder {
   --tw-placeholder-opacity: 1;
   color: rgb(203 213 225 / var(--tw-placeholder-opacity));
+}
+
+.placeholder-blueGray-400::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-placeholder-opacity));
+}
+
+.placeholder-blueGray-400::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-placeholder-opacity));
+}
+
+.placeholder-blueGray-500::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-placeholder-opacity));
+}
+
+.placeholder-blueGray-500::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-placeholder-opacity));
 }
 
 .opacity-50 {
