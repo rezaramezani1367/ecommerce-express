@@ -1,7 +1,7 @@
 const ErrorResponse = require("../utils/errorResponse");
 
 const errorHandler = (err, req, res, next) => {
-  console.log(err);
+ 
 
   let error = { ...err };
 
@@ -13,7 +13,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.code === 11000) {
-    console.log({err});
+    console.log({ err });
     const message = "Duplicate field value entered";
     error = new ErrorResponse(message, 400);
   }
@@ -26,11 +26,14 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // add more check...
+  req.flash("success1", error.message);
+  req.flash("form", req.body);
 
-  res.status(error.statusCode || 500).json({
-    success: false,
-    error: error.message || "Server Error",
-  });
+  // res.status(error.statusCode || 500).json({
+  //   success: false,
+  //   error: error.message || "Server Error",
+  // });
+  res.redirect("back");
 };
 
 module.exports = errorHandler;

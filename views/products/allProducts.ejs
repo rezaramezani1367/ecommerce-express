@@ -111,15 +111,13 @@
                               <form
                                 action="/api/v1/Products/<%= p._id %>?_method=DELETE"
                                 method="post"
-                                class="text-sm py-2 px-4 font-normal 
-                                flex gap-6 items-center w-full whitespace-nowrap bg-transparent text-blueGray-700 cursor-pointer"
                               >
-                                <input type="text" hidden  />
-                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                <input type="text" hidden />
                                 <button
                                   type="submit"
-                                 
+                                  class="text-sm py-2 px-4 font-normal flex gap-6 items-center w-full whitespace-nowrap bg-transparent text-blueGray-700 cursor-pointer"
                                 >
+                                  <i class="fa fa-trash" aria-hidden="true"></i>
                                   Delete
                                 </button>
                               </form>
@@ -140,4 +138,4 @@
   </div>
 
   <%- include('../layouts/end.ejs')%>
-</body>
+

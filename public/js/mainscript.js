@@ -1,3 +1,4 @@
+
 /* Make dynamic date appear */
 (function () {
   if (document.getElementById("get-current-year")) {
