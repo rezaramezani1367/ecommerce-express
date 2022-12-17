@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+var uniqueValidator = require("mongoose-unique-validator");
+
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -62,12 +64,12 @@ UserSchema.statics.checkValidCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new Error("Unable to login 2");
+    throw new Error("email or password worng");
   }
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    throw new Error("Unable to login 2");
+    throw new Error("email or password worng");
   }
 
   return user;
@@ -109,5 +111,8 @@ UserSchema.pre("save", async function (next) {
 */
 
 const User = mongoose.model("User", UserSchema);
-
+// Apply the uniqueValidator plugin to UserSchema.
+UserSchema.plugin(uniqueValidator, {
+  message: "{PATH} already exists(must be unique)",
+});
 module.exports = User;

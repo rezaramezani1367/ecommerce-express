@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const auth = require("./middleware/auth");
 
 connectDB();
 
@@ -36,6 +37,7 @@ app.use(express.json());
 // Routes
 
 app.use("/user", require("./routes/userRoutes"));
+// app.use(auth);
 app.use("/api/v1/products", require("./routes/productRoutes"));
 
 // Error Handler

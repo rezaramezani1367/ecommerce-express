@@ -1,5 +1,5 @@
 const ErrorResponse = require("../utils/errorResponse");
-
+var url = require("url");
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
 
@@ -23,17 +23,22 @@ const errorHandler = (err, req, res, next) => {
     error = new ErrorResponse(message, 400);
   }
 
-  // add more check...
-  req.flash("success1", error.message);
+  var url_parts = url.parse(req.url);
 
-  req.flash("form", req.body);
+  if (url_parts.pathname.includes("/api/v1/products/")) {
+    // console.log(url_parts.pathname);
+    // add more check...
+    req.flash("success1", error.message);
 
+    req.flash("form", req.body);
 
-  // res.status(error.statusCode || 500).json({
-  //   success: false,
-  //   error: error || "Server Error",
-  // });
-  res.redirect("back");
+    res.redirect("back");
+  } else {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      error: error.message || "Server Error",
+    });
+  }
 };
 
 module.exports = errorHandler;
