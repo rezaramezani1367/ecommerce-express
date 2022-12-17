@@ -6,7 +6,7 @@ const errorHandler = require("./middleware/errorHandler");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
-const session = require('express-session');
+const session = require("express-session");
 
 connectDB();
 
@@ -18,12 +18,14 @@ app.use(express.static(path.join(__dirname, "public")));
 // flash
 
 app.use(cookieParser("ytuutuutrururru"));
-app.use(session({
-  secret: 'sfffweffwefwrwenwfjwerg',
-  resave: true,
-  saveUninitialized: true,
-  // cookie: { secure: true }
-}))
+app.use(
+  session({
+    secret: "sfffweffwefwrwenwfjwerg",
+    resave: true,
+    saveUninitialized: true,
+    // cookie: { secure: true }
+  })
+);
 app.use(flash());
 
 app.set("view engine", "ejs");
@@ -32,6 +34,8 @@ app.use(methodOverride("_method"));
 app.use(express.json());
 
 // Routes
+
+app.use("/user", require("./routes/userRoutes"));
 app.use("/api/v1/products", require("./routes/productRoutes"));
 
 // Error Handler
