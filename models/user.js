@@ -4,61 +4,73 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 var uniqueValidator = require("mongoose-unique-validator");
 
-
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  age: {
-    type: Number,
-    default: 0,
-    validate(value) {
-      if (value < 0) {
-        throw new Error("Age must be a positive number");
-      }
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+      trim: true,
     },
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error("Email is invalid!");
-      }
-    },
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 7,
-    validate(value) {
-      if (validator.isEmpty(value)) {
-        throw new Error("Please enter your password!");
-      } else if (validator.equals(value.toLowerCase(), "password")) {
-        throw new Error("Password is invalid!");
-      } else if (validator.contains(value.toLowerCase(), "password")) {
-        throw new Error("Password should not contain password!");
-      }
-    },
-  },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Email is invalid!");
+        }
       },
     },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+      validate(value) {
+        if (
+          !/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/.test(
+            value
+          )
+        ) {
+          throw new Error(
+            `password must be at least 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character`
+          );
+        }
+      },
+    },
+    mobile: {
+      type: "String",
+      required: true,
+      unique: true,
+      validate(value) {
+        if (!/^[0][9][0-9]{9}$/.test(value)) {
+          throw new Error(
+            `The mobile field must be number(11character) and started by 09 example 09123456789`
+          );
+        }
+      },
+    },
+    image: {
+      type: String,
+      default: "/profile-image/image.png",
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-});
+  { versionKey: false }
+);
 
 UserSchema.statics.checkValidCredentials = async (email, password) => {
   const user = await User.findOne({ email });
@@ -102,13 +114,6 @@ UserSchema.pre("save", async function (next) {
   }
   next();
 });
-
-/*UserSchema.pre("remove", async function (next) {
-  const user = this;
-  await Post.deleteMany({ author: user._id });
-  next();
-});
-*/
 
 const User = mongoose.model("User", UserSchema);
 // Apply the uniqueValidator plugin to UserSchema.
