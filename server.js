@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require('cors')
 const path = require("path");
 const express = require("express");
 const connectDB = require("./config/db");
@@ -8,6 +9,7 @@ const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const auth = require("./middleware/auth");
+
 
 connectDB();
 
@@ -33,6 +35,8 @@ app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 // Middleware
 app.use(express.json());
+// cors
+app.use(cors())
 
 // Routes
 

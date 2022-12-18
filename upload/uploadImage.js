@@ -1,9 +1,18 @@
 const multer = require("multer");
 const mkdirp = require("mkdirp");
+var url = require("url");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./public/products/images");
+    var url_parts = url.parse(req.url);
+    // console.log(url_parts.pathname);
+    // add product image
+    if (url_parts.pathname.includes("/create")) {
+      cb(null, "./public/products/images");
+    } else if (url_parts.pathname.includes("/changeProfileImage")) {
+      //Upload profile image
+      cb(null, "./public/profile-image");
+    }
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);

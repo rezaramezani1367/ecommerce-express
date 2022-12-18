@@ -54,7 +54,11 @@ const UserSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default: "/profile-image/image.png",
+      default: "/profile-image/images.png",
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
     tokens: [
       {
@@ -89,7 +93,10 @@ UserSchema.statics.checkValidCredentials = async (email, password) => {
 
 UserSchema.methods.newAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user.id.toString() }, "thisiskey");
+  const token = jwt.sign(
+    { _id: user.id.toString() },
+    process.env.ACCESS_TOKEN_SECRET
+  );
   // user.tokens = user.tokens.concat({ token })
   user.tokens = [{ token }];
   await user.save();

@@ -22,3 +22,18 @@ exports.logoutUser = asyncHandler(async (req, res, next) => {
   await req.user.save();
   res.send({ success: "ok", data: "logout successful" });
 });
+exports.changeProfileImage = asyncHandler(async (req, res, next) => {
+  await User.findByIdAndUpdate(
+    req.user._id,
+    { image: req.body.image },
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log("Updated User : ", docs);
+      }
+    }
+  );
+  // console.log(await User.find({ _id: req.user._id }));
+  res.send(await User.findOne({ _id: req.user._id }));
+});
