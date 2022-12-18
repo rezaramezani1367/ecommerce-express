@@ -8,8 +8,10 @@ const {
   loginUser,
   logoutUser,
   changeProfileImage,
+  changeProfile,
 } = require("../controllers/userControllers");
 router.route("/profile").get(authenticate, getCurrentUser);
+router.route("/profile/change").post(authenticate, changeProfile);
 router.route("/add").post(createUser);
 router.route("/login").post(loginUser);
 router.route("/logout").post(authenticate, logoutUser);
