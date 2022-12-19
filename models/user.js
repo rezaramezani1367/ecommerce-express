@@ -54,6 +54,7 @@ const UserSchema = new mongoose.Schema(
     },
     image: {
       type: String,
+      require: true,
       default: "/profile-image/images.png",
     },
     isAdmin: {
@@ -111,11 +112,13 @@ UserSchema.methods.newAuthToken = async function () {
 UserSchema.methods.toJSON = function () {
   const user = this;
   const userObj = user.toObject();
-
+  const myProfile = userObj.profile ?? {};
+  delete myProfile?._id;
+  delete userObj.profile;
   delete userObj.password;
   delete userObj.tokens;
 
-  return userObj;
+  return { ...userObj, ...myProfile };
 };
 
 //hash the plain text password before saving

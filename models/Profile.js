@@ -15,7 +15,6 @@ const profileSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female"],
       default: "male",
       required: true,
     },
@@ -32,11 +31,7 @@ const profileSchema = new mongoose.Schema(
   },
   { versionKey: false }
 );
-profileSchema.virtual("profiles", {
-  ref: "Profile",
-  localField: "_id",
-  foreignField: "profile",
-});
+
 const Profile = mongoose.model("Profile", profileSchema);
 
 // Apply the uniqueValidator plugin to profileSchema.
