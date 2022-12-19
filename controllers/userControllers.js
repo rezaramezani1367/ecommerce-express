@@ -31,8 +31,14 @@ exports.changeProfileImage = asyncHandler(async (req, res, next) => {
   res.send(await User.findOne({ _id: req.user._id }).populate("profile"));
 });
 exports.changeProfile = asyncHandler(async (req, res, next) => {
-  const profile =  new Profile(req.body);
-  await profile.save();
-  await User.findByIdAndUpdate(req.user._id, { profile: profile._id });
+  const userCheckProfile = await User.findOne({ _id: req.user._id });
+  if (userCheckProfile.profile) {
+    await Profile.findByIdAndUpdate(userCheckProfile.profile,req.body );
+  } else {
+    // when profile not exists
+    const profile = new Profile(req.body);
+    await profile.save();
+    await User.findByIdAndUpdate(req.user._id, { profile: profile._id });
+  }
   res.send(await User.findOne({ _id: req.user._id }).populate("profile"));
 });
