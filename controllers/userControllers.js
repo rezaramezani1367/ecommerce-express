@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const asyncHandler = require("../middleware/asyncHandler");
 const Profile = require("../models/Profile");
+const bcrypt = require("bcryptjs");
 
 exports.getCurrentUser = asyncHandler(async (req, res, next) => {
   res.send(req.user);
@@ -16,6 +17,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     req.body.password
   );
   const token = await user.newAuthToken();
+
   res.send({ user, token });
 });
 exports.logoutUser = asyncHandler(async (req, res, next) => {
@@ -33,12 +35,34 @@ exports.changeProfileImage = asyncHandler(async (req, res, next) => {
 exports.changeProfile = asyncHandler(async (req, res, next) => {
   const userCheckProfile = await User.findOne({ _id: req.user._id });
   if (userCheckProfile.profile) {
-    await Profile.findByIdAndUpdate(userCheckProfile.profile,req.body );
+    await Profile.findByIdAndUpdate(userCheckProfile.profile, req.body, {
+      runValidators: true,
+    });
   } else {
     // when profile not exists
     const profile = new Profile(req.body);
     await profile.save();
     await User.findByIdAndUpdate(req.user._id, { profile: profile._id });
   }
+  res.send(await User.findOne({ _id: req.user._id }).populate("profile"));
+});
+exports.changePassword = asyncHandler(async (req, res, next) => {
+  // oldPassword & newPassword
+  if (!(req.body.oldPassword && req.body.newPassword)) {
+    throw new Error("oldPassword & newPassword require ");
+  }
+  // check old password
+  const user = await User.findOne({ _id: req.user._id });
+
+  if (!user) {
+    throw new Error("old password worng");
+  }
+  const isMatch = await bcrypt.compare(req.body.oldPassword, user.password);
+
+  if (!isMatch) {
+    throw new Error("old password worng");
+  }
+  user.password = req.body.newPassword;
+  await user.save();
   res.send(await User.findOne({ _id: req.user._id }).populate("profile"));
 });

@@ -9,12 +9,14 @@ const {
   logoutUser,
   changeProfileImage,
   changeProfile,
+  changePassword,
 } = require("../controllers/userControllers");
 router.route("/profile").get(authenticate, getCurrentUser);
 router.route("/profile/change").post(authenticate, changeProfile);
 router.route("/add").post(createUser);
 router.route("/login").post(loginUser);
 router.route("/logout").post(authenticate, logoutUser);
+router.route("/changePassword").post(authenticate, changePassword);
 router.route("/changeProfileImage").post(
   authenticate,
   uploadImage.single("image"),
