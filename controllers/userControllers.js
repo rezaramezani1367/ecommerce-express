@@ -52,7 +52,7 @@ exports.changePassword = asyncHandler(async (req, res, next) => {
     throw new Error("oldPassword & newPassword require ");
   }
   // check old password
-  const user = await User.findOne({ _id: req.user._id });
+  const user = await User.findOne({ _id: req.user._id }).populate("profile");
 
   if (!user) {
     throw new Error("old password worng");
@@ -64,5 +64,5 @@ exports.changePassword = asyncHandler(async (req, res, next) => {
   }
   user.password = req.body.newPassword;
   await user.save();
-  res.send(await User.findOne({ _id: req.user._id }).populate("profile"));
+  res.send(user);
 });

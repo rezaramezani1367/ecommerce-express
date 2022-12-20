@@ -41,8 +41,9 @@ app.use(cors());
 // Routes
 
 app.use("/user", require("./routes/userRoutes"));
-// app.use(auth);
 app.use("/api/v1/products", require("./routes/productRoutes"));
+app.use(auth);
+app.use("/order", require("./routes/orderRoutes"));
 
 // Error Handler
 app.use(errorHandler);

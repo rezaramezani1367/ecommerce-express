@@ -24,8 +24,8 @@ const errorHandler = (err, req, res, next) => {
   }
 
   var url_parts = url.parse(req.url);
-
-  if (url_parts.pathname.includes("/api/v1/products/")) {
+  console.log(url_parts.pathname.includes("/api/v1/products/"));
+  if (false) {
     // console.log(url_parts.pathname);
     // add more check...
     req.flash("success1", error.message);
