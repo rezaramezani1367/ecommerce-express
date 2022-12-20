@@ -5,17 +5,17 @@ const fs = require("fs");
 const path = require("path");
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
   const product = await Product.find({}, { numReviews: 0 });
-  // res.status(200).json({
-  //   success: true,
-  //   data: product,
-  // });
+  res.status(200).json({
+    success: true,
+    data: product,
+  });
 
-  res.render("products/allProducts", {
+  /*res.render("products/allProducts", {
     message: req.flash("success1"),
     path: "/api/v1/products",
     pageTitle: "All Products",
     product,
-  });
+  });*/
 });
 exports.getOneProduct = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
@@ -36,12 +36,12 @@ exports.createNewProductForm = asyncHandler(async (req, res, next) => {
 exports.createNewProduct = asyncHandler(async (req, res, next) => {
   const product = await Product.create(req.body);
   req.flash("success1", "product created successfully");
-  // res.status(201).json({
-  //   success: true,
-  //   data: product,
-  // });
+  res.status(201).json({
+    success: true,
+    data: product,
+  });
 
-  res.redirect("/api/v1/Products/");
+  // res.redirect("/api/v1/Products/");
 });
 
 exports.updateProductById = asyncHandler(async (req, res, next) => {
@@ -81,10 +81,10 @@ exports.deleteProductById = asyncHandler(async (req, res, next) => {
   });
   await product.remove();
   product = await Product.find({});
-  req.flash("success1", "product deleted successfully"),
-    res.redirect("/api/v1/Products/");
-  // res.status(200).json({
-  //   success: true,
-  //   data: product,
-  // });
+  /* req.flash("success1", "product deleted successfully"),
+    res.redirect("/api/v1/Products/");*/
+  res.status(200).json({
+    success: true,
+    data: product,
+  });
 });

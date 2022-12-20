@@ -25,7 +25,7 @@ const errorHandler = (err, req, res, next) => {
 
   var url_parts = url.parse(req.url);
   console.log(url_parts.pathname.includes("/api/v1/products/"));
-  if (false) {
+  /* if (false) {
     // console.log(url_parts.pathname);
     // add more check...
     req.flash("success1", error.message);
@@ -33,12 +33,12 @@ const errorHandler = (err, req, res, next) => {
     req.flash("form", req.body);
 
     res.redirect("back");
-  } else {
-    res.status(error.statusCode || 500).json({
-      success: false,
-      error: error.message || "Server Error",
-    });
-  }
+  } else {*/
+  res.status(error.statusCode || 500).json({
+    success: false,
+    error: error.message || "Server Error",
+  });
+  // }
 };
 
 module.exports = errorHandler;
